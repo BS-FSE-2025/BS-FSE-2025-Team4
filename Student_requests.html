@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בקשות סטודנט </title>
+    <style>
+        body {
+
+
+            
+            font-family: Arial, sans-serif;
+            direction:rtl;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 50%;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #d8dce0;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(13, 13, 13, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+        }
+
+        select, input[type="text"], input[type="date"], button {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+            border: 2px solid #170c58;
+            border-radius: 25px; /* עיגול פינות */
+            font-size: 16px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #message {
+            color: red;
+            text-align: center;
+        }
+
+        #requestDetails {
+            display: none;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        #viewRequestBtn {
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #viewRequestBtn:hover {
+            background-color: #45a049;
+        }
+
+        .buttons-wrapper {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .buttons-wrapper button {
+            width: 48%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>מערכת שליחת בקשת סטודנט למנהל / למאמן בקהילה</h1>
+
+        <form id="requestForm">
+            <!-- שירות מבוקש -->
+            <label for="service">בחר שירות מבוקש:</label>
+            <select id="service" required>
+                <option value="מנהל">מנהל</option>
+                <option value="מאמן">מאמן</option>
+            </select>
+
+            <!-- תאריך בקשה -->
+            <label for="date">תאריך בקשה:</label>
+            <input type="date" id="date" required>
+
+            <!-- נושא הפגישה -->
+            <label for="subject">נושא הפגישה:</label>
+            <input type="text" id="subject" placeholder="כתוב את הבקשה שלך..." required>
+
+            <!-- כפתורי שליחה והצגה -->
+            <div class="buttons-wrapper">
+                <button type="submit">שלח בקשה</button>
+                <button type="button" id="resetBtn" onclick="resetForm()">אפס טופס</button>
+            </div>
+        </form>
+
+        <div id="message"></div>
+
+        <!-- הצגת פרטי הבקשה -->
+        <button id="viewRequestBtn" onclick="showRequestDetails()">הצג את הבקשה שלי</button>
+        <div id="requestDetails"></div>
+    </div>
+
+    <script>
+        // Event listener for the form submission
+        document.getElementById('requestForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission behavior
+
+            // Get the data from the form
+            var service = document.getElementById('service').value;
+            var date = document.getElementById('date').value;
+            var subject = document.getElementById('subject').value;
+
+            // Get the current date in YYYY-MM-DD format
+            var currentDate = new Date().toISOString().split('T')[0]; 
+
+            // Check if the selected date has passed
+            if (date < currentDate) {
+                document.getElementById('message').innerText = "התאריך שציינת עבר, נסה שנית";
+                document.getElementById('viewRequestBtn').style.display = 'none'; // Hide the view request button
+                document.getElementById('requestForm').reset();
+                document.getElementById('date').focus();
+                return;
+            }
+
+            // If the date is valid, show a success message
+            document.getElementById('message').innerText = "הבקשה שלך נשלחה בהצלחה!";
+
+            // Store the request data
+            var requestData = {
+                service: service,
+                date: date,
+                subject: subject
+            };
+
+            // Save the request in localStorage
+            localStorage.setItem('requestData', JSON.stringify(requestData));
+
+            // Clear the form
+            document.getElementById('requestForm').reset();
+
+            // Show the "view request" button
+            document.getElementById('viewRequestBtn').style.display = 'inline';
+        });
+
+        // Function to show the request details
+        function showRequestDetails() {
+            var requestData = JSON.parse(localStorage.getItem('requestData'));
+            if (requestData) {
+                var requestDetails = `
+                    <p><strong>שירות מבוקש:</strong> ${requestData.service}</p>
+                    <p><strong>תאריך בקשה:</strong> ${requestData.date}</p>
+                    <p><strong>נושא הפגישה:</strong> ${requestData.subject}</p>
+                `;
+                document.getElementById('requestDetails').innerHTML = requestDetails;
+                document.getElementById('requestDetails').style.display = 'block';
+            } else {
+                document.getElementById('requestDetails').innerHTML = "לא נמצאו בקשות.";
+                document.getElementById('requestDetails').style.display = 'block';
+            }
+        }
+
+        // Function to reset the form and clear messages
+        function resetForm() {
+            document.getElementById('requestForm').reset();
+            document.getElementById('message').innerText = "";
+            document.getElementById('requestDetails').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
