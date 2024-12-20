@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الحضور والغياب</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #0a0a0a;
+            text-align: center;
+        }
+        th {
+            background-color: #0c7bae;
+            color: white;
+        }
+        .present {
+            background-color: #37984e;
+            color: white;
+        }
+        .absent {
+            background-color: #901c27;
+            color: white;
+        }
+        button {
+            margin: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>בדיקת נוכחות</h1>
+
+    <input type="text" id="studentName" placeholder="שם התלמיד " />
+    <select id="attendanceStatus">
+        <option value="present">נמצא</option>
+        <option value="absent">לא נמצא</option>
+    </select>
+    <button onclick="addAttendance()">הוסף התלמיד לרשימה</button>
+
+    <table>
+        <thead>
+            <tr>
+                <th>שם תלמיד</th>
+                <th>הנמצאים</th>
+            </tr>
+        </thead>
+        <tbody id="student-list"></tbody>
+    </table>
+
+    <script>
+        function addAttendance() {
+            const studentName = document.getElementById('studentName').value;
+            const attendanceStatus = document.getElementById('attendanceStatus').value;
+            const studentList = document.getElementById('student-list');
+
+            if (studentName.trim() === '') {
+                alert('נאלהזין את שם התלמיד');
+                return;
+            }
+
+            const newRow = document.createElement('tr');
+            const nameCell = document.createElement('td');
+            const attendanceCell = document.createElement('td');
+
+            nameCell.innerText = studentName;
+            attendanceCell.innerText = attendanceStatus === 'present' ? '✅' : '❌';
+            attendanceCell.className = attendanceStatus === 'present' ? 'present' : 'absent';
+
+            newRow.appendChild(nameCell);
+            newRow.appendChild(attendanceCell);
+            studentList.appendChild(newRow);
+
+            // نصفي الإدخال بعد الإضافة
+            document.getElementById('studentName').value = '';
+            document.getElementById('attendanceStatus').value = 'present';
+        }
+    </script>
+
+</body>
+</html>
+
