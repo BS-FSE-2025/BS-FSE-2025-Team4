@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In Form</title>
+    <style>
+        /* עיצוב הדף */
+        body {
+            font-family: Arial, sans-serif;
+            direction: rtl;
+            background: linear-gradient(0deg, rgba(159,215,156,1) 0%, rgba(253,187,45,1) 100%);
+            margin: 0;
+            padding: 0;
+        }
+
+        .form-container {
+            margin: 20px auto;
+            padding: 20px;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #fff;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container h1 {
+            text-align: center;
+            color: #0a0909;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #0c0812;
+        }
+
+        .form-container input {
+            width: 95%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #cbe968;
+            border-radius: 8px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, rgb(19, 183, 71) 0%, rgb(83, 189, 193) 50%, rgb(19,183,71) 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-container button:hover {
+            background: linear-gradient(90deg, rgb(222, 211, 68) 0%, rgba(36,198,220,1) 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .card {
+            width: 60px;
+            height: 60px;
+            background-color: #74b81b;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .card:hover {
+            background-color: #45a049;
+            transform: scale(1.1);
+        }
+
+        .card:active {
+            transform: scale(0.95);
+        }
+
+        .tip {
+            font-size: 24px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>התחברות</h1>
+        <form id="signInForm" novalidate>
+            <div id="error-message" class="error-message" style="display: none;"></div>
+
+            <label for="name">שם:</label>
+            <input type="text" id="name" name="name" placeholder="Name" required>
+
+            <label for="age">גיל:</label>
+            <input type="number" id="age" name="age" placeholder="Age" required min="7" max="18">
+
+            <label for="email">אימייל:</label>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+
+            <label for="phone">מספר טלפון:</label>
+            <input type="text" id="phone" name="phone" placeholder="Phone Number" required minlength="10" maxlength="10">
+            
+            <label for="parent-phone">מספר טלפון של הורה:</label>
+            <input type="text" id="parent-phone" name="parent-phone" placeholder="Parent's Phone Number" required minlength="10" maxlength="10">
+
+
+            <label for="username">שם משתמש:</label>
+            <input type="text" id="username" name="username" placeholder="Username" required minlength="8" maxlength="8">
+
+            <label for="password">סיסמה:</label>
+            <input type="password" id="password" name="password" placeholder="Password" required minlength="8" maxlength="8">
+
+            <!-- כפתור סמל -->
+            <button type="button" onclick="redirectToProfile()">&#10148;</button>
+        </form>
+        <div class="cards">
+            <a href="Mpage.html" class="card hi" style="text-decoration: none;">
+                <p class="tip">🏠</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function redirectToProfile() {
+            const form = document.getElementById("signInForm");
+            const errorMessage = document.getElementById("error-message");
+
+            if (!form.checkValidity()) {
+                errorMessage.style.display = "block";
+                errorMessage.textContent = "נא למלא את כל השדות כראוי!";
+                return;
+            }
+
+            // הפניה לעמוד studentprofile.html
+            window.location.href = "studentArea.html";
+        }
+    </script>
+</body>
+</html>
