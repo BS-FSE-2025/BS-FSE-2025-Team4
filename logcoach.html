@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: rgb(159, 215, 156);
+            background: linear-gradient(0deg, rgba(159, 215, 156, 1) 0%, rgba(253, 187, 45, 1) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 60px;
+            border-radius: 20px;
+            box-shadow: 0 0 10px rgba(198, 94, 94, 0.981);
+        }
+        .login-container h2 {
+            margin-bottom: 30px;
+            color: #fdbb2d;
+            text-align: right;
+        }
+        .login-container label {
+            display: block;
+            margin-bottom: 5px;
+            text-align: right;
+        }
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            direction: rtl;
+        }
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #9fd79c;
+            color: rgb(0, 0, 0);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .login-container button:hover {
+            background-color: #fdbb2d;
+            color: white;
+        }
+        .login-container .signin-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #fdbb2d;
+            text-decoration: none;
+        }
+        .login-container .signin-link:hover {
+            text-decoration: underline;
+        }
+        .cards {
+            margin-top: 10px;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .card.hi {
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #74b81b;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .card.hi:hover {
+            background-color: #9fd79c;
+        }
+        .card.hi .tip {
+            font-size: 20px;
+            margin: 0;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>התחברות למאמן</h2>
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <label for="username">:שם משתמש</label>
+            <input type="text" id="username" name="username" required minlength="8" maxlength="8" 
+                   pattern=".{8}" title="שם המשתמש חייב להיות בדיוק 8 תווים" aria-label="שם משתמש">
+            <label for="password">:סיסמה</label>
+            <input type="password" id="password" name="password" required minlength="8" maxlength="8" 
+                   pattern=".{8}" title="הסיסמה חייבת להיות בדיוק 8 תווים" aria-label="סיסמה">
+            <button type="submit"><b>התחבר</b></button>
+        </form>
+        <div class="cards">
+            <a href="Mpage.html" class="card hi">
+                <p class="tip">🏠</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault(); // מונע את השליחה ברירת המחדל
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            if (username.length === 8 && password.length === 8) {
+                // הפניה לדף coachtArea.html
+                window.location.href = "coachArea.html";
+            } else {
+                alert("שם המשתמש והסיסמה חייבים להיות בדיוק 8 תווים.");
+            }
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
