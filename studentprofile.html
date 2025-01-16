@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>עמוד פרופיל</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .profile-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .profile-picture {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto;
+            border: 5px solid #ddd;
+        }
+
+        .profile-picture img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 20px 0 10px;
+        }
+
+        .profile-bio {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .profile-details {
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        .profile-details h3 {
+            font-size: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .profile-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .profile-details ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-picture">
+            <img src="https://via.placeholder.com/150" alt="תמונת פרופיל">
+        </div>
+        <div class="profile-name">student Profile</div>
+        <div class="profile-details">
+            <h3>מידע אישי</h3>  
+            <ul> 
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            direction: rtl;
+                            background-color: #f4f4f4;
+                            margin: 0;
+                            padding: 0;
+                        }
+                
+                        .profile-container {
+                            max-width: 600px;
+                            margin: 50px auto;
+                            background: #fff;
+                            padding: 20px;
+                            border-radius: 10px;
+                            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        }
+                
+                        .profile-container h1 {
+                            text-align: center;
+                        }
+                
+                        .profile-details {
+                            margin-top: 20px;
+                        }
+                
+                        .profile-details div {
+                            margin-bottom: 10px;
+                        }
+                
+                        .profile-details input {
+                            width: 95%;
+                            padding: 8px;
+                            margin-bottom: 10px;
+                            border: 1px solid #ddd;
+                            border-radius: 5px;
+                            display: none; /* מוסתר עד שמתחילים לערוך */
+                        }
+                
+                        .buttons {
+                            text-align: center;
+                        }
+                
+                        .buttons button {
+                            padding: 10px 20px;
+                            margin: 10px;
+                            border: none;
+                            border-radius: 5px;
+                            cursor: pointer;
+                        }
+                
+                        .edit-button {
+                            background-color: #2196F3;
+                            color: white;
+                        }
+                
+                        .save-button {
+                            background-color: #4CAF50;
+                            color: white;
+                            display: none; /* מוסתר עד העריכה */
+                        }
+                    </style>
+                </head>
+                <body>
+                            <div>
+                                <strong>שם:</strong>
+                                <span id="name-display"></span>
+                                <input type="text" id="name-input">
+                            </div>
+            
+                            <div>
+                                <strong>אימייל:</strong>
+                                <span id="email-display"></span>
+                                <input type="email" id="email-input">
+                            </div>
+                            <div>
+                                <strong>מספר טלפון:</strong>
+                                <span id="phone-display"></span>
+                                <input type="text" id="phone-input">
+                            </div>
+                            <div>
+                                <strong>שם משתמש:</strong>
+                                <span id="username-display"></span>
+                                <input type="text" id="username-input">
+                            </div>
+                            <div>
+                                <strong>סיסמה:</strong>
+                                <span id="password-display"></span>
+                                <input type="password" id="password-input">
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <button class="edit-button" onclick="editProfile()">ערוך</button>
+                            <button class="save-button" onclick="saveProfile()">שמור</button>
+                        </div>
+                    </div>
+                
+                    <script>
+                        // טעינת נתוני הפרופיל
+                        function loadProfile() {
+                            const profile = JSON.parse(localStorage.getItem('studentProfile'));
+                
+                            if (profile) {
+                                document.getElementById('name-display').textContent = profile.name;
+                                document.getElementById('age-display').textContent = profile.age;
+                                document.getElementById('email-display').textContent = profile.email;
+                                document.getElementById('phone-display').textContent = profile.phone;
+                                document.getElementById('username-display').textContent = profile.username;
+                                document.getElementById('password-display').textContent = profile.password;
+                
+                                document.getElementById('name-input').value = profile.name;
+                                document.getElementById('age-input').value = profile.age;
+                                document.getElementById('email-input').value = profile.email;
+                                document.getElementById('phone-input').value = profile.phone;
+                                document.getElementById('username-input').value = profile.username;
+                                document.getElementById('password-input').value = profile.password;
+                            }
+                        }
+                
+                        // מעבר למצב עריכה
+                        function editProfile() {
+                            document.querySelectorAll('.profile-details input').forEach(input => {
+                                input.style.display = 'block';
+                            });
+                            document.querySelectorAll('.profile-details span').forEach(span => {
+                                span.style.display = 'none';
+                            });
+                            document.querySelector('.edit-button').style.display = 'none';
+                            document.querySelector('.save-button').style.display = 'inline-block';
+                        }
+                
+                        // שמירת השינויים
+                        function saveProfile() {
+                            const profile = {
+                                name: document.getElementById('name-input').value,
+                                age: document.getElementById('age-input').value,
+                                email: document.getElementById('email-input').value,
+                                phone: document.getElementById('phone-input').value,
+                                username: document.getElementById('username-input').value,
+                                password: document.getElementById('password-input').value,
+                            };
+                
+                            localStorage.setItem('studentProfile', JSON.stringify(profile));
+                            loadProfile();
+                
+                            document.querySelectorAll('.profile-details input').forEach(input => {
+                                input.style.display = 'none';
+                            });
+                            document.querySelectorAll('.profile-details span').forEach(span => {
+                                span.style.display = 'inline';
+                            });
+                            document.querySelector('.edit-button').style.display = 'inline-block';
+                            document.querySelector('.save-button').style.display = 'none';
+                        }
+                
+                        // הפעלת הפונקציה בעת טעינת הדף
+                        window.onload = loadProfile;
+                    </script>
+                </body>
+                </html>
+                
+
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
