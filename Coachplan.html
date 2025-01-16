@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>זיהוי קבוצה ואימון</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            direction: rtl;
+            background: url('plan1.jpg') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label, input, button {
+            display: block;
+            margin: 10px 0;
+            width: 100%;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>זיהוי קבוצה ואימון</h1>
+    <div class="container">
+        <label for="age-input">הכנס את גילך (בין 7 ל-18):</label>
+        <input type="number" id="age-input" placeholder="הכנס גיל" min="7" max="18">
+        
+        <label for="week-input">הכנס את השבוע (בין 1 ל-8):</label>
+        <input type="number" id="week-input" placeholder="הכנס שבוע" min="1" max="8">
+        
+        <button onclick="findGroup()">מצא קבוצה ואימון ןתחריות  (אחרי השבוע החמישי)</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        // Training data
+        const trainingData = [
+            {
+                ageRange: [7, 10], 
+                days: ["ראשון", "שני"],
+                groups: [
+                    { age: 7, name: "קבוצה א'", time: "14:00–15:30", activity: "תרגול מסירות, כדרור ועצירת כדור" },
+                    { age: 8, name: "קבוצה ב'", time: "15:30–17:00", activity: "פיתוח מוטוריקה עם תרגילי סלאלום וכדרור" },
+                    { age: 9, name: "קבוצה ג'", time: "17:00–18:30", activity: "משחקונים 2x2 עם דגש על שיתוף פעולה" },
+                    { age: 10, name: "קבוצה ד'", time: "18:30–20:00", activity: "משחק חופשי ומשימות אישיות" }
+                ]
+            },
+            {
+                ageRange: [11, 14],
+                days: ["שלישי", "רביעי"],
+                groups: [
+                    { age: 11, name: "קבוצה א'", time: "14:00–15:30", activity: "תרגול טכניקות מתקדמות" },
+                    { age: 12, name: "קבוצה ב'", time: "15:30–17:00", activity: "פיתוח קואורדינציה קבוצתית" },
+                    { age: 13, name: "קבוצה ג'", time: "17:00–18:30", activity: "תרגול הגנה והתקפה" },
+                    { age: 14, name: "קבוצה ד'", time: "18:30–20:00", activity: "ניתוח משחק ומשחקונים" }
+                ]
+            },
+            {
+                ageRange: [15, 18],
+                days: ["חמישי", "שישי"],
+                groups: [
+                    { age: 15, name: "קבוצה א'", time: "14:00–15:30", activity: "אימונים פיזיים מתקדמים" },
+                    { age: 16, name: "קבוצה ב'", time: "15:30–17:00", activity: "אסטרטגיות משחק" },
+                    { age: 17, name: "קבוצה ג'", time: "17:00–18:30", activity: "משחקים טקטיים" },
+                    { age: 18, name: "קבוצה ד'", time: "18:30–20:00", activity: "ניתוח משחק ותרגול אישי" }
+                ]
+            }
+        ];
+
+        function findGroup() {
+            const age = parseInt(document.getElementById('age-input').value);
+            const week = parseInt(document.getElementById('week-input').value);
+            const resultContainer = document.getElementById('result');
+            resultContainer.innerHTML = ""; // Clear previous results
+
+            // Check if age and week are valid
+            if (isNaN(age) || age < 7 || age > 18) {
+                resultContainer.innerHTML = "<p>נא להכניס גיל תקין בין 7 ל-18.</p>";
+                return;
+            }
+
+            if (isNaN(week) || week < 1 || week > 8) {
+                resultContainer.innerHTML = "<p>נא להכניס שבוע תקין בין 1 ל-8.</p>";
+                return;
+            }
+
+            let selectedGroup = null;
+            let selectedDays = [];
+            let selectedTime = "";
+            let selectedActivity = "";
+
+            for (const training of trainingData) {
+                if (age >= training.ageRange[0] && age <= training.ageRange[1]) {
+                    selectedGroup = training.groups.find(group => group.age === age);
+                    selectedDays = training.days;
+                    selectedTime = selectedGroup.time;
+                    selectedActivity = selectedGroup.activity;
+                    break;
+                }
+            }
+
+            if (selectedGroup) {
+                resultContainer.innerHTML = `
+                    <p>הגיל שלך מתאים ל-${selectedGroup.name}</p>
+                    <p><strong>ימי אימונים:</strong> ${selectedDays.join(" ו")}</p>
+                    <p><strong>שעות:</strong> ${selectedTime}</p>
+                    <p><strong>אימון היום:</strong> ${selectedActivity}</p>
+                `;
+
+                if (week >= 5 && week <= 8) {
+                    let competitionType = "";
+                    if (week === 5) competitionType = "תחרות בסיסית";
+                    else if (week === 6) competitionType = "תחרות רבע גמר";
+                    else if (week === 7) competitionType = "תחרות חצי גמר";
+                    else if (week === 8) competitionType = "תחרות גמר";
+
+                    resultContainer.innerHTML += `
+                        <p><strong>בשבוע ${week}:</strong> ${competitionType} לכל הקבוצות בימי שבת</p>
+                    `;
+                }
+            } else {
+                resultContainer.innerHTML = "<p>לא נמצאה קבוצה מתאימה.</p>";
+            }
+        }
+    </script>
+</body>
+</html>
