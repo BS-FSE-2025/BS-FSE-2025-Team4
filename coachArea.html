@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>איזור אישי של מאמנים</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(0deg, rgba(159,215,156,1) 0%, rgb(250, 203, 77) 100%);
+
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #00294d;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .header-logo button {
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .header-logo button img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .header-text {
+            font-size: 18px;
+        }
+          
+
+        .logout-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: block;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .logout-link:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 10px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 עמודות */
+            gap: 15px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 20px;
+            cursor: pointer;
+        }
+
+        .card img {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #00294d;
+            color: white;
+            margin-top: 20px;
+        }
+
+        /* התאמה רספונסיבית */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr); /* 2 עמודות במסכים בינוניים */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr; /* עמודה אחת במסכים קטנים */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-logo">
+            <button onclick="location.href='coachprofile.html'">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/user-male-circle.png" alt="משתמש">
+            </button>
+            <div>
+                <div class="header-text">ערב טוב!  מאמנים  </div>
+                <a href="Mpage.html" class="logout-link">התנתקות</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <h2>יישומים חשובים</h2>
+        <div class="grid">
+            <div class="card" onclick="location.href='TrainingCoach.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/calendar.png" alt="מערכת">
+                <h3>מערכת אימונים</h3>
+           
+
+            </div>
+            <div class="card" onclick="location.href='Coachplan.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/dumbbell.png" alt="תכנית אימונים">
+                <h3>תכנית אימונים</h3>
+            </div>
+            <div class="card" onclick="location.href='coachrespond.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/ask-question.png" alt="תצוגת בקשות">
+                <h3>תצוגת בקשות</h3>
+            </div>
+            <div class="card" onclick="location.href='studentPerformance.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/student-male.png" alt="ערך תלמידים">
+                <h3>ערך תלמידים</h3>
+            </div>
+            <div class="card" onclick="location.href='attendance.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/attendance-mark.png" alt="בדיקת נוכחות">
+                <h3>בדיקת נוכחות</h3>
+            </div>
+            <div class="card" onclick="location.href='C_news.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/news.png" alt="חדשות ואירועים">
+                <h3>חדשות ואירועים</h3>
+            </div>
+            <div class="card" onclick="location.href='cancel_training.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/delete.png" alt="בטל אימון">
+                <h3>בטל אימון</h3>
+
+ </div>
+            <div class="card" onclick="location.href='CompetitionCoach.html'">
+                <img src="https://img.icons8.com/ios-filled/50/000000/trophy.png" alt="מערכת תחריות">
+                <h3>מערכת תחרויות</h3>
+
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        איזור אישי של  המאמנים  
+    </footer>
+</body>
+</html>
