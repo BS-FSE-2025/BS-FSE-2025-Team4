@@ -1,52 +1,39 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const { MongoClient } = require('mongodb');
-const path = require('path');
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import studentRoutes from './routes/S_route.js';
+import coachRoutes from './routes/C_route.js';
+import managerRoutes from './routes/M_route.js';
 
-const app = express();
-const port = 3000;
+dotenv.config(); // הפעלת קובץ הגדרות סביבה
 
-// Middleware
-app.use(bodyParser.json());
+const app = express(); // הגדרת אפליקציה חדשה
 
-//חיבור MongoDB ל URI
-const uri = 'mongodb://localhost:27017';
-const dbName = 'noordb';
-const collectionName = 'events';
+app.use(cors()); 
+app.use(express.json()); //גישה לקוד של הבקשות בפורמט ג'ייסון
 
-let db;
+app.use('/api/students', studentRoutes);  
+app.use('/api/coaches', coachRoutes);
+app.use('/api/managers', managerRoutes);
 
-// חיבור ל MongoDB
-MongoClient.connect(uri)
-  .then(client => {
-    console.log('Connected to Database');
-    db = client.db(dbName);
-  })
-  .catch(error => console.error(error));
-
-
-// Serve Mevents.html at the root route
-app.get('/', (req, res) => {
-  console.log(path.join(__dirname, 'Mevents', 'Mevents.html')); // Log resolved path for debugging
-  res.sendFile(path.join(__dirname, 'Mevents', 'Mevents.html')); // folder name
+app.post('/api/logout', (req, res) => {
+  if (!req.session) {
+    return res.status(400).json({ message: 'אין שום דבר להתנתק ממנו' });
+  }
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).json({ message: 'התנתקות נכשלה' });
+    }
+    res.clearCookie('connect.sid');
+    res.json({ message: 'התנתק בהצלחה' });
+  });
 });
 
-// form submission, הגשת אירוע חדש
-app.post('/add-event', (req, res) => {
-  const eventData = req.body;
+mongoose
+  .connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB Connected'))
+  .catch((err) => console.error('MongoDB Connection Error:', err));
 
-  db.collection(collectionName).insertOne(eventData)
-    .then(result => {
-      res.status(200).json({ message: 'Event added successfully' });
-    })
-    .catch(error => {
-      res.status(500).json({ error: error.message });
-    });
-});
-
-// Serve static files
-app.use(express.static(path.join(__dirname, 'Mevents')));
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+const PORT = process.env.PORT || 2025;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
